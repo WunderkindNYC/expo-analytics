@@ -1,9 +1,9 @@
-import { Platform, Dimensions } from 'react-native';
-import Constants from 'expo-constants';
+import { Platform, Dimensions } from "react-native";
+import Constants from "expo-constants";
 
-import { ScreenHit, PageHit, Event, Serializable } from './hits';
+import { ScreenHit, PageHit, Event, Serializable } from "./hits";
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 let defaultOptions = { debug: false };
 
@@ -20,7 +20,7 @@ const getWebViewUserAgent = async options => {
         webViewUserAgent = userAgent;
         resolve(userAgent);
       })
-      .catch(() => resolve('unknown user agent'));
+      .catch(() => resolve("unknown user agent"));
   });
 };
 
@@ -38,7 +38,11 @@ export default class Analytics {
         this.userAgent = userAgent;
 
         this.parameters = {
-          an: Constants.manifest.name,
+          an: `${Constants.manifest.name}-${Platform.select({
+            android: "AND",
+            ios: "IOS",
+            web: "PWA"
+          })}`,
           aid: Constants.manifest.slug,
           av: Constants.manifest.version,
           sr: `${width}x${height}`,
@@ -121,10 +125,10 @@ export default class Analytics {
 
     const customDimensions = this.customDimensions
       .map((value, index) => `cd${index}=${value}`)
-      .join('&');
+      .join("&");
     const customMetrics = this.customMetrics
       .map((value, index) => `cm${index}=${value}`)
-      .join('&');
+      .join("&");
 
     const params = new Serializable(this.parameters).toQueryString();
 
@@ -137,9 +141,9 @@ export default class Analytics {
     )}`;
 
     let options = {
-      method: 'get',
+      method: "get",
       headers: {
-        'User-Agent': this.userAgent
+        "User-Agent": this.userAgent
       }
     };
 
