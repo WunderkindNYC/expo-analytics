@@ -41,8 +41,9 @@ export class PageHit extends Hit {
   constructor(screenName, url) {
     let options = {
       dt: screenName,
-      dp: screenName,
-      t: "pageview"
+      // dp removed based on request from LeafBuyer
+      // dp: screenName,
+      t: "pageview",
     };
 
     if (Platform.OS === "web" && url) options.dl = url;
@@ -78,7 +79,7 @@ export class AddItem extends Hit {
       iq: quantity,
       ic: sku,
       iv: category,
-      t: "item"
+      t: "item",
     });
   }
 }
