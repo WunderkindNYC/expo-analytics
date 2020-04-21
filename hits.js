@@ -1,5 +1,3 @@
-import { Platform } from "react-native";
-
 export class Serializable {
   constructor(props) {
     this.properties = props || {};
@@ -46,7 +44,7 @@ export class PageHit extends Hit {
       t: "pageview",
     };
 
-    if (Platform.OS === "web" && url) options.dl = url;
+    if (url) options.dl = url;
 
     super(options);
   }
